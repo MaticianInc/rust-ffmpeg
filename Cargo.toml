@@ -1,33 +1,40 @@
 [package]
+build   = "build.rs"
 name    = "ffmpeg-next"
 version = "4.4.0-next.1"
-build   = "build.rs"
 
 authors = ["meh. <meh@schizofreni.co>", "Zhiming Wang <i@zhimingwang.org>"]
 license = "WTFPL"
 
+categories    = ["multimedia"]
 description   = "Safe FFmpeg wrapper (FFmpeg 4 compatible fork of the ffmpeg crate)"
 documentation = "https://docs.rs/ffmpeg-next"
 homepage      = "https://github.com/zmwangx/rust-ffmpeg#readme"
-repository    = "https://github.com/zmwangx/rust-ffmpeg"
-readme        = "README.md"
 keywords      = ["ffmpeg", "multimedia", "video", "audio"]
-categories    = ["multimedia"]
+readme        = "README.md"
+repository    = "https://github.com/zmwangx/rust-ffmpeg"
 
 [features]
-default = ["codec", "device", "filter", "format", "software-resampling", "software-scaling"]
+default = [
+    "codec",
+    "device",
+    "filter",
+    "format",
+    "software-resampling",
+    "software-scaling",
+]
 
 # ffmpeg<xy> are obsolete features kept for backward compatibility purposes and
 # don't do anything anymore (equivalents are automatically specified through
 # compile-time detection in ffmpeg-sys-next). Deprecation plan: all these
 # features will be removed come 5.0.
-ffmpeg43 = []
-ffmpeg42 = []
+ffmpeg4  = []
 ffmpeg41 = []
-ffmpeg4 = []
+ffmpeg42 = []
+ffmpeg43 = []
 
-static = ["ffmpeg-sys-next/static"]
 build  = ["static", "ffmpeg-sys-next/build"]
+static = ["ffmpeg-sys-next/static"]
 
 # licensing
 build-license-gpl      = ["ffmpeg-sys-next/build-license-gpl"]
@@ -43,17 +50,18 @@ build-lib-gnutls  = ["ffmpeg-sys-next/build-lib-gnutls"]
 build-lib-openssl = ["ffmpeg-sys-next/build-lib-openssl"]
 
 # filters
+build-lib-ass        = ["ffmpeg-sys-next/build-lib-ass"]
 build-lib-fontconfig = ["ffmpeg-sys-next/build-lib-fontconfig"]
+build-lib-freebidi   = ["ffmpeg-sys-next/build-lib-freebidi"]
+build-lib-freetype   = ["ffmpeg-sys-next/build-lib-freetype"]
 build-lib-frei0r     = ["ffmpeg-sys-next/build-lib-frei0r"]
 build-lib-ladspa     = ["ffmpeg-sys-next/build-lib-ladspa"]
-build-lib-ass        = ["ffmpeg-sys-next/build-lib-ass"]
-build-lib-freetype   = ["ffmpeg-sys-next/build-lib-freetype"]
-build-lib-freebidi   = ["ffmpeg-sys-next/build-lib-freebidi"]
 build-lib-opencv     = ["ffmpeg-sys-next/build-lib-opencv"]
 build-lib-vmaf       = ["ffmpeg-sys-next/build-lib-vmaf"]
 
 # encoders/decoders
 build-lib-aacplus          = ["ffmpeg-sys-next/build-lib-aacplus"]
+build-lib-avs              = ["ffmpeg-sys-next/build-lib-avs"]
 build-lib-celt             = ["ffmpeg-sys-next/build-lib-celt"]
 build-lib-dav1d            = ["ffmpeg-sys-next/build-lib-dav1d"]
 build-lib-dcadec           = ["ffmpeg-sys-next/build-lib-dcadec"]
@@ -84,7 +92,6 @@ build-lib-wavpack          = ["ffmpeg-sys-next/build-lib-wavpack"]
 build-lib-webp             = ["ffmpeg-sys-next/build-lib-webp"]
 build-lib-x264             = ["ffmpeg-sys-next/build-lib-x264"]
 build-lib-x265             = ["ffmpeg-sys-next/build-lib-x265"]
-build-lib-avs              = ["ffmpeg-sys-next/build-lib-avs"]
 build-lib-xvid             = ["ffmpeg-sys-next/build-lib-xvid"]
 
 # protocols
@@ -96,8 +103,8 @@ codec               = ["ffmpeg-sys-next/avcodec"]
 device              = ["ffmpeg-sys-next/avdevice", "format"]
 filter              = ["ffmpeg-sys-next/avfilter"]
 format              = ["ffmpeg-sys-next/avformat", "codec"]
-resampling          = ["ffmpeg-sys-next/avresample"]
 postprocessing      = ["ffmpeg-sys-next/postproc"]
+resampling          = ["ffmpeg-sys-next/avresample"]
 software-resampling = ["ffmpeg-sys-next/swresample"]
 software-scaling    = ["ffmpeg-sys-next/swscale", "codec"]
 
@@ -105,13 +112,14 @@ software-scaling    = ["ffmpeg-sys-next/swscale", "codec"]
 rpi = []
 
 [dependencies]
-libc     = "0.2"
 bitflags = "1.2"
+libc     = "0.2"
 
 [dependencies.image]
-version  = "0.12"
 optional = true
+version  = "0.12"
 
 [dependencies.ffmpeg-sys-next]
-version = "4.4.0-next.1"
 default-features = false
+git              = "https://github.com/MaticianInc/rust-ffmpeg-sys"
+version          = "4.4.0-next.1"
