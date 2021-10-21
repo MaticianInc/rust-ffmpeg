@@ -121,5 +121,5 @@ version  = "0.12"
 
 [dependencies.ffmpeg-sys-next]
 default-features = false
-git              = "https://github.com/MaticianInc/rust-ffmpeg-sys"
+path             = "rust-ffmpeg-sys"
 version          = "4.4.0-next.1"
